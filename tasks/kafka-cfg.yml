@@ -56,6 +56,9 @@
   tags:
     - kafka-healthcheck
 
+- name: dbg open ports
+  shell: netstat -laputen | grep 9092
+    
 - name: "Check kafka port test result"
   fail: msg="Kafka port not open on host={{ inventory_hostname }}, port={{ server.port }}"
   when: healthcheck.elapsed >= kafka_port_test_timeout_seconds and kafka_port_test_timeout_seconds > 0
