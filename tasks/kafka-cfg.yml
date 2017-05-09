@@ -51,7 +51,7 @@
 
 - name: "Wait for kafka to come up and open it's server port"
   wait_for: port={{ server.port }} host={{ healthcheck_address }} timeout={{ kafka_port_test_timeout_seconds }}
-  #ignore_errors: yes
+  ignore_errors: yes
   register: healthcheck
   tags:
     - kafka-healthcheck
@@ -60,7 +60,7 @@
   shell: netstat -laputen | grep 9092
     
 - name: "Check kafka port test result"
-  fail: msg="Kafka port not open on host={{ inventory_hostname }}, port={{ server.port }}"
+  fail: msg="Kafka port not open on host={{ inventory_hostname }}, port={{ server.port }}, hc={{ healthcheck }}"
   when: healthcheck.elapsed >= kafka_port_test_timeout_seconds and kafka_port_test_timeout_seconds > 0
   tags:
     - kafka-healthcheck
