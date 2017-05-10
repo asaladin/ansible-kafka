@@ -62,7 +62,7 @@ server:
   num_io_threads: 8
   background_threads:
   queued_max_requests:
-  host_name:
+  host_name: ~
   advertised_host_name:
   advertised_port:
   advertised_listeners:
