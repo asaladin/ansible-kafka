@@ -52,7 +52,7 @@ kafka_log4j_date_pattern: "'.'yyyy-MM-dd" # Rollover at midnight each day.
 
 kafka_environment: {}
 
-healthcheck_address: "{{ server.host_name | default('127.0.0.1')}}"
+healthcheck_address: "{{ server.host_name | default('localhost')}}"
 
 
 server:
