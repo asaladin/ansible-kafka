@@ -50,8 +50,8 @@
 - meta: flush_handlers
 
 - name: "Wait for kafka to come up and open it's server port"
-  shell: sleep 15; nc -z {{ healthcheck_address }} {{ server.port }} 
-  #ignore_errors: yes
+  wait_for: port={{ server.port }} host={{ healthcheck_address }} timeout={{ kafka_port_test_timeout_seconds }}
+  ignore_errors: yes
   register: healthcheck
   tags:
     - kafka-healthcheck
@@ -59,8 +59,8 @@
 - name: dbg open ports
   shell: netstat -laputen | grep 9092
     
-#- name: "Check kafka port test result"
-#  fail: msg="Kafka port not open on host={{ inventory_hostname }}, port={{ server.port }}, hc={{ healthcheck }}"
-#  when: healthcheck.elapsed >= kafka_port_test_timeout_seconds and kafka_port_test_timeout_seconds > 0
-#  tags:
-#    - kafka-healthcheck
+- name: "Check kafka port test result"
+  fail: msg="Kafka port not open on host={{ inventory_hostname }}, port={{ server.port }}, hc={{ healthcheck }}"
+  when: healthcheck.elapsed >= kafka_port_test_timeout_seconds and kafka_port_test_timeout_seconds > 0
+  tags:
+    - kafka-healthcheck
