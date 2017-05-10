@@ -52,9 +52,6 @@ kafka_log4j_date_pattern: "'.'yyyy-MM-dd" # Rollover at midnight each day.
 
 kafka_environment: {}
 
-healthcheck_address: "{{ server.host_name | default('localhost')}}"
-
-
 server:
   # broker_id: <-- this is auto-set by hashing the machine-id during kafka-cfg step.
   # zookeeper_hosts: <-- this is auto-set by the global "kafka_zookeeper_hosts" setting.
@@ -142,6 +139,8 @@ server:
   offsets_commit_required_acks:
   offsets_commit_timeout_ms:
   misc: {}
+
+healthcheck_address: "{{ server.host_name | default('localhost')}}"
 
 producer:
   # metadata_broker_list: <-- this is auto-set by the global "kafka_hosts" setting.
